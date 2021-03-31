@@ -1,5 +1,6 @@
 
 
+import random
 # O(N)
 board = {str(i+1): str(i+1) for i in range(9)}
 
@@ -32,20 +33,24 @@ def play():
     turn = 'X'
 
     for i in range(10):
-
         while True:
-            print_board(board)
-            print("It's your turn, " + turn)
-            move = input()
+            if turn != 'O':
+                print_board(board)
+                print("It's your turn, " + turn)
+                move = input()
 
-            if str(move) not in board or board[str(move)] != str(move):
-                print("Nuh uh, that doesn't work, try somewhere else. \n")
-            else:
+                if str(move) not in board or board[str(move)] != str(move):
+                    print("Nuh uh, that doesn't work, try somewhere else. \n")
+                else:
+                    break
+            else: 
+                places= [i for i in board.keys() if str(i) == str(board[i])]
+                move = random.choice(places)
+
+                print("\nComputer placed O at " + str(move))
                 break
-
-        if board[move] == str(move):
-            board[move] = turn
-            print('\n')
+        
+        board[move] = turn
 
         if check_winner():
             print_board(board)
